@@ -1,0 +1,51 @@
+<form [formGroup]="newTaskForm" class="input-wrapper" (ngSubmit)="onSubmit()">
+  <div fxLayout="column" fxLayoutAlign="center center" class="example-container" fxLayoutGap="10px">
+
+    <!-- Checkbox para el estado "completed" de la tarea -->
+    <div fxFlex="100%">
+      <span>
+        <input
+          class="task-checkbox"
+          type="checkbox"
+          formControlName="completed"
+        />
+      </span>
+    </div>
+  
+    <!-- Campo de entrada para el nombre de la tarea -->
+    <div fxFlex="100%">
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Task Name...</mat-label>
+        <input
+          matInput
+          formControlName="text"
+          class="task-input"
+          type="text"
+          placeholder="Create a new task..."
+          required
+        />
+      </mat-form-field>
+    </div>
+  
+    <!-- Botón para agregar la tarea -->
+    <div fxFlex="100%" class="button-container">
+      <button
+        mat-raised-button
+        class="add-button"
+        type="submit"
+        [disabled]="newTaskForm.invalid"
+      >
+        Add Task
+      </button>
+    </div>
+    
+    <!-- Mensaje de estado de la tarea agregada -->
+    @if (taskAdded) {
+      <div class="status-message">
+        <mat-icon color="primary">check_circle</mat-icon>
+        ¡Tarea agregada con éxito!
+      </div>
+    }
+  </div>
+  
+</form>

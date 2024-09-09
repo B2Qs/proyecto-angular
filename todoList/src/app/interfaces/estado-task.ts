@@ -1,0 +1,1 @@
+export type TaskOption = 'all' | 'active' | 'completed';

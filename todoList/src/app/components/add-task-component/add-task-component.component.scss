@@ -1,0 +1,136 @@
+.input-wrapper {
+  display: flex;
+  gap: 2.4rem;
+  align-items: center;
+  background-color: var(--bg-todo-color);
+  margin-bottom: 2.4rem;
+  padding: 32px;
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 1.275rem;
+  box-shadow: 0 3.5rem 5rem -1.5rem var(--shadow-color);
+  transition: all 0.3s;
+
+  .example-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2.275rem;
+    align-items: center;
+
+    .example-full-width {
+      width: 25.3rem;
+      flex: 1;
+
+      // Estilo del input de la tarea
+      .task-input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: inherit;
+        font-family: inherit;
+        line-height: 1.9rem;
+        letter-spacing: -0.25px;
+        transition: all 0.3s;
+      }
+    }
+
+    mat-form-field {
+      margin-bottom: 15px;
+      padding-top: 7.5rem;
+    }
+
+    .button-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: auto;
+
+      .add-button {
+        padding: 5px 10px;
+        font-weight: 300;
+        margin-top: 5rem;
+        margin-left: 1.225rem;
+        color: #fff;
+        background-color: #0d47a1;
+        border: 1px solid transparent;
+        border-radius: 3rem;
+        outline: none;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #5485bd;
+        }
+
+        &:active {
+          background-color: #0d47a1;
+        }
+      }
+    }
+
+    .task-checkbox {
+      appearance: none;
+      height: 2.4rem;
+      width: 2.4rem;
+      color: var(--btn-color);
+      margin-top: 4.750rem;
+      background: linear-gradient(var(--bg-task-color), var(--bg-task-color)) padding-box,
+      linear-gradient(var(--btn-color), var(--btn-color)) border-box;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover, &:focus {
+        background: linear-gradient(var(--bg-task-color), var(--bg-task-color)) padding-box,
+        linear-gradient(to bottom right, rgba(85, 221, 255, 1), rgba(192, 88, 243, 1)) border-box;
+      }
+      &:checked{
+        background-image: url("../../../assets/images/icon-check.svg"), linear-gradient(to bottom right, rgba(85, 221, 255, 1), rgba(192, 88, 243, 1));
+        background-position: center;
+        background-size: auto;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .status-message {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      margin-top: 24px;
+      padding: 12px 20px;
+      background-color: #e3f2fd;
+      border-radius: 8px;
+      color: #1e88e5;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      mat-icon {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+@media (max-width: 40em) {
+  .input-wrapper {
+    padding: 1.4rem 2rem;
+    margin-bottom: 1.6rem;
+    gap: 1.2rem;
+  }
+
+  .task-checkbox {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .task-input {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    letter-spacing: -0.17px;
+  }
+}

@@ -1,0 +1,31 @@
+.task-list {
+    display: flex;
+    gap: 2.4rem;
+    align-items: center;
+    background-color: var(--bg-todo-color);
+    margin-bottom: 2.4rem;
+    padding: 32px;
+    width: 100%;
+    margin: 0 auto;
+    &__list {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+
+        @media screen and (min-width: 768px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .no-tasks {
+            text-align: center;
+        }
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
