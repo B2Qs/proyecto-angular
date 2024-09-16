@@ -20,7 +20,7 @@ export class TaskServiceService {
   tasks = signal<Task[]>([]);
   optionSelect = signal<TaskOption>('all');
 
-  // Metodo que permite filtrar las tareas 
+  // Metodo que permite filtrar el estado de los tasks 
   filtrarTasks = computed(() =>{
     switch(this.optionSelect()){
       case 'all':
@@ -32,11 +32,12 @@ export class TaskServiceService {
     }
   })
 
+  // Permite de tener una idea de cuanto tasks has terminado
   taskSleft = computed(
     () => this.tasks().filter((task) => !task.completed).length
   )
 
-    // Load todos from local storage
+    // Load todos los tasks from local storage
     private loadTasks(): Task[] {
       try {
         return this.taskStorage
@@ -59,9 +60,11 @@ export class TaskServiceService {
   // Obtener todas las tareas //
   getTasks(): Observable<Task[]>{
     const tasks = this.loadTasks();  
-    console.log('Tasks cargadas de localStorage:', tasks); 
+    console.log('Tasks cargadas de localStorage:', tasks);
+    
     this.taskSubject.next(tasks);
     this.tasks.set(tasks);
+
     return this.tasks$;
   }
 
@@ -73,6 +76,8 @@ export class TaskServiceService {
     const tasksRecientes = this.taskSubject.getValue();
     const newTasks = [...tasksRecientes, task];
     this.taskSubject.next(newTasks);
+
+    this.tasks.set(newTasks);
     this.guardarTasks(newTasks)
     return of(true);
   }
@@ -87,8 +92,11 @@ export class TaskServiceService {
     const updatedTaks = taskRecientes.map(task => task.id ===
       taskupdate.id ? taskupdate : task
     );
+
     this.taskSubject.next(updatedTaks);
-    this.guardarTasks(updatedTaks)
+    this.tasks.set(updatedTaks);
+    this.guardarTasks(updatedTaks);
+
     return of(true);
   }
 
@@ -100,8 +108,11 @@ export class TaskServiceService {
 
     const TasksRecientes = this.taskSubject.getValue();
     const updatedTasks = TasksRecientes.filter(task => task.id !== id);
+
     this.taskSubject.next(updatedTasks)
+    this.tasks.set(updatedTasks)
     this.guardarTasks
+
     return of(true);
   }
 

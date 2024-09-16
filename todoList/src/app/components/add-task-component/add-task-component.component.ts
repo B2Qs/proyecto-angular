@@ -1,10 +1,13 @@
 import { Component, inject, Inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
-  FormControl,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { TaskServiceService } from '../../services/task-service.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -19,9 +22,13 @@ import { Task } from '../../interfaces/task';
   imports: [
     MatFormFieldModule,
     MatIconModule,
+    CommonModule,
+    FormsModule,
     MatInputModule, 
     MatSelectModule,
     MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ReactiveFormsModule
   ],
   templateUrl: './add-task-component.component.html',
@@ -32,6 +39,7 @@ export class AddTaskComponentComponent {
   fb = inject(FormBuilder);
   constructor(private taskService: TaskServiceService){}
   taskAdded: boolean = false;
+  newDateTaks: Date | null = null;
   
   protected readonly value = signal('');
 
@@ -39,6 +47,7 @@ export class AddTaskComponentComponent {
   newTaskForm = this.fb.group({
     text: ['', [Validators.required, Validators.minLength(2)]],
     completed: [false],
+    date: [null],
   });
 
   // metodo de submit
@@ -49,9 +58,17 @@ export class AddTaskComponentComponent {
       id: Math.random(),
       title: text ?? 'No title',
       completed: completed ?? false,
+      message: '',
+      date: this.newDateTaks
     };
     
-    this.taskService.addTask(task)
+    this.taskService.addTask(task).subscribe(success => {
+      if (success){
+        console.log("task added!!");
+      }else{
+        console.error(' Error al agregar tasks !')
+      }
+    })
 
     // Mensaje Opcional
     if(this.value){
@@ -61,6 +78,7 @@ export class AddTaskComponentComponent {
     this.newTaskForm.reset({
       text: '',
       completed: false,
+      date: null,
     });
     this.taskAdded = true;
 

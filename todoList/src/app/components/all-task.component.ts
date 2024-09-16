@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskServiceService } from '../services/task-service.service';
 import { AddTaskComponentComponent } from './add-task-component/add-task-component.component';
@@ -20,68 +20,69 @@ import { take } from 'rxjs';
     ],
     template: `
     <section class="all-task-card">
-  <app-add-task-component></app-add-task-component>
-  
-  <!-- Utilisation correcte de *ngIf -->
-  <main class="task-main" *ngIf="tasks.length > 0; else noTasks">
-    <app-task-list-component [tasks]="filtrarTasks"></app-task-list-component>
-    <app-task-options [tasksLeft]="taskSleft"></app-task-options>
-  </main>
-
-  <!-- Template à afficher s'il n'y a pas de tâches -->
-  <ng-template #noTasks>
-    <p class="no-tasks">No tasks</p>
-  </ng-template>
-</section>
-
+        <app-add-task-component/>
+        
+        @if (tasks().length > 0) {
+            <main class="task-main">
+                <app-task-list-component [tasks]="filtrarTasks()"/>
+                <app-task-options [tasksLeft]="taskSleft()"/>
+            </main>
+        }
+    </section>
     `,
     styles: `
     .all-task-card {
-        max-width: 55rem;
+        max-width: 75rem;
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1.75rem;
         margin: 0 auto;
         padding: 3.2rem;
         .task-main {
-        display: flex;
-        justify-content: space-between;
-        background-color: var(--bg-task-color);
+            background-color: var(--bg-task-color);
+            border-radius: 1.275rem;
         }
     }
     .no-tasks {
         text-align: center;
         font-size: 1.5rem;
     }
+
+    @media (max-width: 40em) {
+        .all-task-card {
+            padding: 1.6rem;
+        }
+    }
     `
 })
+
+
 export class AllTaskComponent implements OnInit {
     taskService = inject(TaskServiceService);
 
-    constructor(private cdr: ChangeDetectorRef) {};
+    constructor() {};
+
+    ////////////////////////////////////////////
+    ngOnInit(): void {
+        this.taskService.getTasks().pipe(take(1)).subscribe(tasks => {
+            console.log('Tasks received:', tasks);
+        });
+    }
 
     // metodo para obtener todas las tareas
     get tasks() {
-        return this.taskService.tasks();
+        return this.taskService.tasks;
     }
 
     // metodo de filtracion de tareas
     get filtrarTasks() {
-        return this.taskService.filtrarTasks();
+        return this.taskService.filtrarTasks;
     }
 
     // metodo de tareas pendientes
     get taskSleft() {
-        return this.taskService.taskSleft();
+        return this.taskService.taskSleft;
     }
-
-    ngOnInit(): void {
-        this.taskService.getTasks().pipe(take(1)).subscribe(tasks => {
-            console.log('Tasks received:', tasks);
-            this.cdr.detectChanges(); 
-        });
-    }
-
 
 }

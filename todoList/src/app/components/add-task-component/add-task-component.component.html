@@ -1,6 +1,5 @@
 <form [formGroup]="newTaskForm" class="input-wrapper" (ngSubmit)="onSubmit()">
   <div fxLayout="column" fxLayoutAlign="center center" class="example-container" fxLayoutGap="10px">
-
     <!-- Checkbox para el estado "completed" de la tarea -->
     <div fxFlex="100%">
       <span>
@@ -22,10 +21,23 @@
           class="task-input"
           type="text"
           placeholder="Create a new task..."
-          required
         />
+        <mat-error>Task name is required</mat-error>
       </mat-form-field>
     </div>
+
+    <!-- campo de seleccion de fecha -->
+    <mat-form-field appearance="outline" class="date-field">
+      <mat-label>Task Date</mat-label>
+      <input
+        matInput
+        formControlName="date"
+        [matDatepicker]="picker"
+        placeholder="DD/MM/YYYY"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   
     <!-- Botón para agregar la tarea -->
     <div fxFlex="100%" class="button-container">
@@ -35,7 +47,7 @@
         type="submit"
         [disabled]="newTaskForm.invalid"
       >
-        Add Task
+        Add
       </button>
     </div>
     
