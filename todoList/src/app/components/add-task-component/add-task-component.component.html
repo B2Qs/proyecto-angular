@@ -25,19 +25,6 @@
         <mat-error>Task name is required</mat-error>
       </mat-form-field>
     </div>
-
-    <!-- campo de seleccion de fecha -->
-    <mat-form-field appearance="outline" class="date-field">
-      <mat-label>Task Date</mat-label>
-      <input
-        matInput
-        formControlName="date"
-        [matDatepicker]="picker"
-        placeholder="DD/MM/YYYY"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
   
     <!-- Botón para agregar la tarea -->
     <div fxFlex="100%" class="button-container">
