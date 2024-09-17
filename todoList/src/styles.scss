@@ -1,7 +1,8 @@
 :root{
     &,
     &.light-mode {
-        --bg-images: url("assets/images/bg-light.jpg");
+        --bg-image: url("assets/images/bg-light.jpg");
+        --bg-mobile-image: url("assets/images/mobil-bg-light.jpg");
         --bg-color: hsl(0, 0%, 98%);
         --bg-task-color: rgba(250, 250, 250, 1);
         --shadow-color: rgba(194, 195, 214, 0.5);
@@ -15,7 +16,8 @@
         --error-color: #d00000;
     }
     &.dark-mode{
-        --bg-images: url("assets/images/bg-dark.jpg");
+        --bg-image: url("assets/images/bg-dark.jpg");
+        --bg-mobile-image: url("assets/images/mobil-bg-dark.jpg");
         --bg-color: rgba(23, 24, 35, 1);
         --bg-task-color: rgba(37, 39, 61, 1);
         --shadow-color: rgba(0, 0, 0, 0.5);

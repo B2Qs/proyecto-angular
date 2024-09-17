@@ -5,6 +5,7 @@ import { Task } from '../../interfaces/task';
 import { take } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule, 
     MatFormFieldModule, 
     MatInputModule,
+    MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule
   ],
@@ -83,38 +85,39 @@ import { MatInputModule } from '@angular/material/input';
               style="display: flex; align-items: center; justify-content: center;"
               aria-label="save"
             >
-            <img src="../../assets/images/check.svg" alt="To save a task"/>
-          </button>
+              <img src="../../assets/images/check.svg" alt="To save a task"/>
+            </button>
 
             <button
               type="button"
               class="task-btn_cancel"
               aria-label="cancel"
               (click)="cancelEdit()"
-              
             >
             <img src="../../assets/images/icon-cross.svg" alt="To delete a task"/>
-          </button>
+            </button>
           </div>
         </form>
       }
 
       <!-- Boton para editar la tarea -->
       <button
+        mat-mini-fab
         class="task-edit-btn"
         aria-label="Edit"
         (click)="onEdit(task)"
         *ngIf="!isEditing"
         type="button">
-        <img src="../../assets/images/edit-button.svg" alt="To edit a task"/>
+        <mat-icon>edit</mat-icon>
       </button>
 
       <!-- Boton para borrar la tarea -->
       <button 
+        mat-mini-fab
         class="task-delete-btn"
         aria-label="Delete" 
         (click)="deleteTask()">
-      <img src="../../assets/images/icon-cross.svg" alt="To delete a task"/>
+        <mat-icon>delete</mat-icon>
       </button>
     </div>
   `,
@@ -156,7 +159,7 @@ export class TaskItemComponentComponent {
     });
   }
 
-  // Soumit del formulario de edicion
+  // Submit del formulario de edicion
   onSubmit(): void {
     if (this.editTaskForm.invalid) {
       return;
@@ -167,7 +170,7 @@ export class TaskItemComponentComponent {
       ...this.editTaskForm.value
     };
 
-    // Envoyer la tâche mise à jour au service
+    // Enviar al servicio
     this.taskService.updateTask(updatedTask).subscribe(success => {
       if (success) {
         this.isEditing = false;

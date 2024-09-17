@@ -1,5 +1,6 @@
 <form [formGroup]="newTaskForm" class="input-wrapper" (ngSubmit)="onSubmit()">
   <div fxLayout="column" fxLayoutAlign="center center" class="example-container" fxLayoutGap="10px">
+    
     <!-- Checkbox para el estado "completed" de la tarea -->
     <div fxFlex="100%">
       <span>
@@ -10,7 +11,7 @@
         />
       </span>
     </div>
-  
+
     <!-- Campo de entrada para el nombre de la tarea -->
     <div fxFlex="100%">
       <mat-form-field appearance="outline" class="example-full-width">
@@ -20,31 +21,31 @@
           formControlName="text"
           class="task-input"
           type="text"
-          placeholder="Create a new task..."
         />
-        <mat-error>Task name is required</mat-error>
+        <!-- Muestra el mensaje de error solo si el campo está inválido y fue tocado -->
+        <mat-error *ngIf="newTaskForm.get('text')?.invalid && newTaskForm.get('text')?.touched">
+          Task name is required
+        </mat-error>
       </mat-form-field>
     </div>
-  
+
     <!-- Botón para agregar la tarea -->
     <div fxFlex="100%" class="button-container">
       <button
-        mat-raised-button
+        mat-mini-fab
         class="add-button"
         type="submit"
         [disabled]="newTaskForm.invalid"
       >
-        Add
+        <mat-icon>add</mat-icon>
       </button>
     </div>
-    
+
     <!-- Mensaje de estado de la tarea agregada -->
-    @if (taskAdded) {
-      <div class="status-message">
-        <mat-icon color="primary">check_circle</mat-icon>
-        ¡Tarea agregada con éxito!
-      </div>
-    }
+    <div *ngIf="taskAdded" class="status-message">
+      <mat-icon color="primary">check_circle</mat-icon>
+      ¡Tarea agregada con éxito!
+    </div>
+    
   </div>
-  
 </form>

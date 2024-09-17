@@ -35,25 +35,23 @@ import { Task } from '../../interfaces/task';
   styleUrl: './add-task-component.component.scss'
 })
 export class AddTaskComponentComponent {
-
   fb = inject(FormBuilder);
-  constructor(private taskService: TaskServiceService){}
+  constructor(private taskService: TaskServiceService) {}
   taskAdded: boolean = false;
   newDateTaks: Date | null = null;
   
   protected readonly value = signal('');
 
-  // metodo de validacion
+  // Formulario reactivo con validaciones mínimas
   newTaskForm = this.fb.group({
     text: ['', [Validators.required, Validators.minLength(2)]],
     completed: [false],
     date: [null],
   });
 
-  // metodo de submit
+  // Envío del formulario
   onSubmit = () => {
-
-    const { text, completed } = this.newTaskForm.value;
+    const { text, completed, date } = this.newTaskForm.value;
     const task: Task = {
       id: Math.random(),
       title: text ?? 'No title',
@@ -63,18 +61,19 @@ export class AddTaskComponentComponent {
     };
     
     this.taskService.addTask(task).subscribe(success => {
-      if (success){
-        console.log("task added!!");
-      }else{
-        console.error(' Error al agregar tasks !')
+      if (success) {
+        console.log("Tarea agregada");
+      } else {
+        console.error('Error al agregar tarea');
       }
-    })
+    });
 
-    // Mensaje Opcional
-    if(this.value){
+    // Asigna mensaje adicional si existe
+    if (this.value) {
       task.message = this.value();
     }
 
+    // Reinicia el formulario después de agregar la tarea
     this.newTaskForm.reset({
       text: '',
       completed: false,
@@ -82,10 +81,11 @@ export class AddTaskComponentComponent {
     });
     this.taskAdded = true;
 
-    // Ocultar la confirmación después de 3 segundos
+    // Oculta el mensaje de confirmación después de 3 segundos
     setTimeout(() => (this.taskAdded = false), 3000);
   };
 
+  // Captura el valor del input
   protected onInput(event: Event) {
     const target = event.target as HTMLInputElement;
     this.value.set(target.value);

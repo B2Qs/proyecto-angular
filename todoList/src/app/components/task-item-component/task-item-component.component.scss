@@ -1,220 +1,224 @@
-.task{
+.task {
     padding: 2rem 2.4rem;
     display: flex;
     align-items: center;
-    box-shadow: inset 0 -0.1rem 0 0 var(--btn-color);
     transition: all 0.3s;
-    gap: 3.275rem;
-    border-bottom: 1px solid #ccc;
-
-    .task-status-indicator {
-        width: 12px;
-        height: 12px;
-        margin-right: 10px;
-        border-radius: 50%;
-    }
-
-    // Boton para marcar o desmarcar la tarea
-    .task-btn{
-        appearance: none;
-        height: 1.9rem;
-        width: 1.9rem;
-        color: var(--btn-color);
-        margin-right: auto;
-        padding: auto;
-        background: linear-gradient(var(--bg-task-color), var(--bg-task-color)) padding-box,
-        linear-gradient(var(--btn-color), var(--btn-color)) border-box;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        outline: none;
-        cursor: pointer;
-        transition: all 0.3s;
+    gap: 2.275rem;
   
-        &:hover, &:focus {
-          background: linear-gradient(var(--bg-task-color), var(--bg-task-color)) padding-box,
+    .task-status-indicator {
+      width: 12px;
+      height: 12px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+  
+    .task-btn {
+      appearance: none;
+      height: 1.9rem;
+      width: 1.9rem;
+      background: linear-gradient(var(--bg-task-color), var(--bg-task-color)) padding-box,
+        linear-gradient(var(--btn-color), var(--btn-color)) border-box;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.3s;
+  
+      &:hover,
+      &:focus {
+        background: linear-gradient(var(--bg-task-color), var(--bg-task-color)) padding-box,
           linear-gradient(to bottom right, rgba(85, 221, 255, 1), rgba(192, 88, 243, 1)) border-box;
-        }
-        &:checked{
-          background-image: url("../../../assets/images/icon-check.svg"), linear-gradient(to bottom right, rgba(85, 221, 255, 1), rgba(192, 88, 243, 1));
-          background-position: center;
-          background-size: auto;
-          background-repeat: no-repeat;
-        }
+      }
+  
+      &:checked {
+        background-image: url("../../../assets/images/icon-check.svg"),
+          linear-gradient(to bottom right, rgba(85, 221, 255, 1), rgba(192, 88, 243, 1));
+        background-position: center;
+        background-size: auto;
+        background-repeat: no-repeat;
+      }
     }
-
-    .task-text{
-        letter-spacing: -0.25px;
-        color: var(--text-color-300);
-        letter-spacing: -0.25px;
-        font-family: 'Josefin Sans', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 400;
-        line-height: 2rem;
+  
+    .task-text {
+      letter-spacing: -0.25px;
+      color: var(--text-color-300);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 2rem;
     }
-    .task-text--completed{
-        text-decoration: line-through;
+  
+    .task-text--completed {
+      text-decoration: line-through;
+      color: var(--text-color-600);
+    }
+  
+    .task-date {
+      color: rgb(122, 104, 82);
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+  
+    .task-edit-btn,
+    .task-delete-btn {
+      border: none;
+      background-color: transparent;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+  
+      &:hover,
+      &:active {
+        transform: scale(1.1);
+      }
+  
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0.2rem 0.15rem var(--shadow-color);
+      }
+  
+      mat-icon {
+        color: rgb(66, 6, 6);
+      }
+    }
+  
+    .task-edit-btn {
+      margin-left: auto;
+      mat-icon {
         color: var(--text-color-600);
+      }
     }
-
-    .task-date{
-        color: rgb(122, 104, 82);
-        padding: auto;
-        display: flex;
-        align-items: center;
-        margin: auto;
+  
+    .task-delete-btn {
+      margin-bottom: 0.825rem;
+      height: 1.5rem;
     }
-
-    // Boton para editar la tarea
-    .task-edit-btn{
-        border: none;
-        background-color: transparent;
-        color: var(--btn-color);
-        font-size: 1.5rem;
-        display: inline;
-        height: 1.9rem;
-        width: 1.9rem;
-        margin-left: auto;
-        padding-bottom: 2.5rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        &:hover,
-        &:active{
-            transform: scale(1.1);
-        }
-        &:focus{
-            outline: none; 
-            box-shadow: 0 0 0.2rem 0.15rem var(--shadow-color);
-        }
-    }
-
-    // Boton para borrar la tarea
-    .task-delete-btn{
-        border: none;
-        background-color: transparent;
-        height: 1.9rem;
-        width: 1.9rem;
-        margin-left: auto;
-        padding: 0;
-        height: 1.5rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        &:hover,
-        &:active{
-            transform: scale(1.1);
-        }
-        &:focus{
-            outline: none; 
-            box-shadow: 0 0 0.2rem 0.15rem var(--shadow-color);
-        }
-    }
-    .task-delete-btn img{
-        display: block;
-    }
-
+  
     .input-wrapper {
-        display: flex;
-        gap: 2.4rem;
-        align-items: center;
-        background-color: var(--bg-todo-color);
-        margin-bottom: 2.4rem;
-        padding: 32px;
-        margin: 0 auto;
+      background-color: var(--bg-task-color);
+      padding: 27px;
+      width: 100%;
+      border-radius: 1.275rem;
+      box-shadow: 0 3.5rem 5rem -1.5rem var(--shadow-color);
+      transition: all 0.3s;
+      .example-full-width {
         width: 100%;
-        border-radius: 1.275rem;
-        box-shadow: 0 3.5rem 5rem -1.5rem var(--shadow-color);
-        transition: all 0.3s;
+        max-width: 23rem;
+      }
+  
+      mat-form-field {
+        margin-bottom: 1.5px;
+        mat-label {
+          font-size: 1.6rem;
+          font-weight: 300;
+          color: var(--text-color-300);
+          letter-spacing: -0.25px;
+        }
         
-
-        .button-container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 1rem;
-          .task-btn {
-            appearance: none;
-            height: 1.7rem;
-            width: 1.7rem;
-            color: var(--btn-color);
-            margin-right: auto;
-            padding: auto;
-            background: linear-gradient(var(--bg-task-color), var(--bg-task-color)) padding-box,
-            linear-gradient(var(--btn-color), var(--btn-color)) border-box;
-            border: 1px solid transparent;
+      }
+  
+      .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+  
+        .task-btn{
             border-radius: 50%;
             outline: none;
             cursor: pointer;
             transition: all 0.3s;
-        }
-
-        .task-btn_cancel {
-            border: none;
-            background-color: transparent;
-            width: 2rem;
-            height: 2rem;
-            margin-right: 1.2rem;
-            padding: 0;
-            cursor: pointer;
-            transition: all 0.3s;
+    
             &:hover,
-            &:active{
+            &:active {
                 transform: scale(1.1);
             }
-            &:focus{
-                outline: none; 
+    
+            &:focus {
                 box-shadow: 0 0 0.2rem 0.15rem var(--shadow-color);
             }
         }
+      }
+      .task-btn_cancel {
+        border: none;
+        background-color: transparent;
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1.2rem;
+        height: 2rem;
+        margin-right: 1.2rem;
+        padding: 0;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover,
+        &:active{
+            transform: scale(1.1);
+        }
+        &:focus{
+            outline: none; 
+            box-shadow: 0 0 0.2rem 0.15rem var(--shadow-color);
         }
     }
 
-    // Responsive
+    }
+  
+    // Responsive styles
     @media (max-width: 40em) {
-        .task{
+      .task {
+        flex-direction: column;
+        gap: 1.5rem;
+  
+        .task-btn {
+          height: 2rem;
+          width: 2rem;
+          margin-right: 1.2rem;
+        }
+  
+        .task-text {
+          font-size: 1.2rem;
+          line-height: 1.2rem;
+          letter-spacing: 0.17px;
+        }
+  
+        .task-date {
+          font-size: 1.2rem;
+        }
+  
+        .task-edit-btn,
+        .task-delete-btn {
+          font-size: 1.2rem;
+          height: 1.2rem;
+          width: 1.2rem;
+        }
+  
+        &.is-editing {
+          .task-text,
+          .task-date {
+            display: none;
+          }
+  
+          .input-wrapper {
             padding: 1.6rem 2rem;
-            .task-btn{
-                height: 2rem;
-                width: 2rem;
-                margin-right: 1.2rem;
-            }
-            .task-text{
-                font-size: 1.2rem;
-                line-height: 1.2rem;
-                letter-spacing: 0.17px;
-            }
-            .task-delete-btn img {
+            gap: 1.2rem;
+  
+            .button-container {
+              gap: 0.8rem;
+  
+              .task-btn {
                 height: 1.2rem;
                 width: 1.2rem;
+              }
+  
+              .task-btn_cancel {
+                width: 1.2rem;
+                height: 1.2rem;
+                margin-right: 0.8rem;
+              }
             }
-
-            &.is-editing{
-                .task-text{
-                    display: none;
-                }
-                .task-date{
-                    display: none;
-                }
-                .input-wrapper {
-                    display: flex;
-                    flex-direction: column;
-                    padding: 1.6rem 2rem;
-                    gap: 1.2rem;
-
-                    .button-container {
-                        gap: 0.8rem;
-
-                        .task-btn {
-                            height: 1.2rem;
-                            width: 1.2rem;
-                        }
-
-                        .task-btn_cancel {
-                            width: 1.2rem;
-                            height: 1.2rem;
-                            margin-right: 0.8rem;
-                        }
-                    }
-                }
-            }
+          }
         }
+      }
     }
-}
+  }
+  
