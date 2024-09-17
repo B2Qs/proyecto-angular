@@ -6,6 +6,7 @@ import { TaskItemComponentComponent } from './task-item-component/task-item-comp
 import { TaskListComponentComponent } from './task-list-component/task-list-component.component';
 import { TaskOptionsComponent } from './taskOptions.component';
 import { take } from 'rxjs';
+import { HeaderComponent } from './header.component';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { take } from 'rxjs';
     standalone: true,
     imports: [
         CommonModule,
+        HeaderComponent,
         AddTaskComponentComponent,
         TaskItemComponentComponent, 
         TaskListComponentComponent, 
@@ -20,6 +22,7 @@ import { take } from 'rxjs';
     ],
     template: `
     <section class="all-task-card">
+        <app-header/>
         <app-add-task-component/>
         
         @if (tasks().length > 0) {

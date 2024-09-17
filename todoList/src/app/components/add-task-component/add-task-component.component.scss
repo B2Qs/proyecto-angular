@@ -3,7 +3,7 @@
   justify-content: center;
   gap: 2.4rem;
   align-items: center;
-  background-color: var(--bg-todo-color);
+  background-color: var(--bg-task-color);
   margin-bottom: 2.4rem;
   padding: 32px;
   margin: 0 auto;
@@ -21,24 +21,29 @@
     .example-full-width {
       width: 23.3rem;
       flex: 1;
-
-      // Estilo del input de la tarea
-      .task-input {
-        width: 50%;
-        border: none;
-        outline: none;
-        background-color: transparent;
-        font-size: inherit;
-        font-family: inherit;
-        line-height: 1.9rem;
-        letter-spacing: -0.25px;
-        transition: all 0.3s;
-      }
     }
 
     mat-form-field {
       margin-bottom: 7.5px;
-      padding-top: 4.5rem;
+      padding-top: 5.5rem;
+      mat-label {
+        font-size: 1.6rem;
+        font-weight: 300;
+        color: var(--text-color-300);
+        letter-spacing: -0.25px;
+      }
+      
+    }
+
+    .status-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--text-color-300);
+      letter-spacing: -0.25px;
     }
 
     .button-container {
@@ -52,8 +57,10 @@
         font-weight: 300;
         margin-top: 5rem;
         margin-left: 1.225rem;
-        color: #fff;
-        background-color: #0d47a1;
+        background-color: var(--btn-color);
+        color: var(--text-color-300);
+        letter-spacing: -0.25px;
+        transition: all 0.3s;
         border: 1px solid transparent;
         border-radius: 3rem;
         outline: none;

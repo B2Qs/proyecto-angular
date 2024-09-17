@@ -83,7 +83,7 @@ import { MatInputModule } from '@angular/material/input';
               style="display: flex; align-items: center; justify-content: center;"
               aria-label="save"
             >
-            <img src="/check.svg" alt="To save a task"/>
+            <img src="../../assets/images/check.svg" alt="To save a task"/>
           </button>
 
             <button
@@ -93,7 +93,7 @@ import { MatInputModule } from '@angular/material/input';
               (click)="cancelEdit()"
               
             >
-            <img src="/icon-cross.svg" alt="To delete a task"/>
+            <img src="../../assets/images/icon-cross.svg" alt="To delete a task"/>
           </button>
           </div>
         </form>
@@ -106,7 +106,7 @@ import { MatInputModule } from '@angular/material/input';
         (click)="onEdit(task)"
         *ngIf="!isEditing"
         type="button">
-        <img src="/edit-button.svg" alt="To edit a task"/>
+        <img src="../../assets/images/edit-button.svg" alt="To edit a task"/>
       </button>
 
       <!-- Boton para borrar la tarea -->
@@ -114,7 +114,7 @@ import { MatInputModule } from '@angular/material/input';
         class="task-delete-btn"
         aria-label="Delete" 
         (click)="deleteTask()">
-      <img src="/icon-cross.svg" alt="To delete a task"/>
+      <img src="../../assets/images/icon-cross.svg" alt="To delete a task"/>
       </button>
     </div>
   `,
@@ -141,7 +141,6 @@ export class TaskItemComponentComponent {
       completed: this.task.completed,
       date: this.task.date || null
     });
-    console.log(' editTaskForm ',this.editTaskForm.value);
   }
 
   togglEdit(){
@@ -163,17 +162,15 @@ export class TaskItemComponentComponent {
       return;
     }
 
-
-    // Construire l'objet de la tâche mise à jour
     const updatedTask: Task = {
-      ...this.task, // Garder l'ID et les autres propriétés
-      ...this.editTaskForm.value // Appliquer les nouvelles valeurs du formulaire
+      ...this.task,
+      ...this.editTaskForm.value
     };
 
     // Envoyer la tâche mise à jour au service
     this.taskService.updateTask(updatedTask).subscribe(success => {
       if (success) {
-        this.isEditing = false; // Quitter le mode édition après la sauvegarde
+        this.isEditing = false;
       }
     });
   }
