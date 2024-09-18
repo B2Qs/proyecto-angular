@@ -66,7 +66,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #5485bd;
+          background-color: var(--btn-color);
         }
 
         &:active {

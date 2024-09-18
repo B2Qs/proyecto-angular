@@ -7,6 +7,7 @@ import { TaskListComponentComponent } from './task-list-component/task-list-comp
 import { TaskOptionsComponent } from './taskOptions.component';
 import { take } from 'rxjs';
 import { HeaderComponent } from './header.component';
+import { FooterComponent } from './footer.component';
 
 
 @Component({
@@ -18,7 +19,8 @@ import { HeaderComponent } from './header.component';
         AddTaskComponentComponent,
         TaskItemComponentComponent, 
         TaskListComponentComponent, 
-        TaskOptionsComponent
+        TaskOptionsComponent,
+        FooterComponent
     ],
     template: `
     <section class="all-task-card">
@@ -31,6 +33,7 @@ import { HeaderComponent } from './header.component';
                 <app-task-options [tasksLeft]="taskSleft()"/>
             </main>
         }
+        <app-footer/>
     </section>
     `,
     styles: `
