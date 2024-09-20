@@ -24,8 +24,8 @@ Instalación
 
     bash
 
-git clone https://github.com/usuario/gestion-tareas-angular.git
-cd gestion-tareas-angular
+(https://github.com/B2Qs/proyecto-angular.git)
+cd proyecto-angular/todoList
 
 Instala las dependencias:
 
