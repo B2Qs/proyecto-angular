@@ -1,6 +1,6 @@
-Gestión de Tareas con Angular
+TodoList con Angular
 
-Este proyecto es una aplicación de gestión de tareas (Todo-list) construida con Angular, Angular Material, SCSS y RxJS. La aplicación permite a los usuarios agregar, editar, eliminar y marcar tareas como completadas. El estado de las tareas se almacena en localStorage.
+Aplicación de gestión de tareas (Todo-list) construida con Angular, Angular Material, SCSS y RxJS. La aplicación permite a los usuarios agregar, editar, eliminar y marcar tareas como completadas. El estado de las tareas se almacena en localStorage.
 
 Estructura del Proyecto
 
