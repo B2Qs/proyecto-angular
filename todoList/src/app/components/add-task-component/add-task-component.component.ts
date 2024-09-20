@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { TaskServiceService } from '../../services/task-service.service';
+import { TaskService } from '../../services/task-service.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,7 +36,7 @@ import { Task } from '../../interfaces/task';
 })
 export class AddTaskComponentComponent {
   fb = inject(FormBuilder);
-  constructor(private taskService: TaskServiceService) {}
+  constructor(private taskService: TaskService) {}
   taskAdded: boolean = false;
   newDateTaks: Date | null = null;
   

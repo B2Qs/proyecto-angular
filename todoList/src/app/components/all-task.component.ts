@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskServiceService } from '../services/task-service.service';
+import { TaskService } from '../services/task-service.service';
 import { AddTaskComponentComponent } from './add-task-component/add-task-component.component';
 import { TaskItemComponentComponent } from './task-item-component/task-item-component.component';
 import { TaskListComponentComponent } from './task-list-component/task-list-component.component';
@@ -65,11 +65,10 @@ import { FooterComponent } from './footer.component';
 
 
 export class AllTaskComponent implements OnInit {
-    taskService = inject(TaskServiceService);
+    taskService = inject(TaskService);
 
     constructor() {};
 
-    ////////////////////////////////////////////
     ngOnInit(): void {
         this.taskService.getTasks().pipe(take(1)).subscribe(tasks => {
             console.log('Tasks received:', tasks);
@@ -83,12 +82,12 @@ export class AllTaskComponent implements OnInit {
 
     // metodo de filtracion de tareas
     get filtrarTasks() {
-        return this.taskService.filtrarTasks;
+        return this.taskService.filteredTasks;
     }
 
     // metodo de tareas pendientes
     get taskSleft() {
-        return this.taskService.taskSleft;
+        return this.taskService.tasksLeft;
     }
 
 }

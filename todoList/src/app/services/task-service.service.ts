@@ -1,41 +1,41 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+
 import { Task } from '../interfaces/task';
 import { TaskOption } from '../interfaces/estado-task';
 import { TaskStorageService } from './task-storage.service';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { Observable, BehaviorSubject, from, mergeMap, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskServiceService {
+export class TaskService{
   private readonly taskStorageKey = 'tasks';
-  private taskSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
-  public tasks$: Observable<Task[]> = this.taskSubject.asObservable().pipe(
-    distinctUntilChanged()
-  );
+  private taskSubject = new BehaviorSubject<Task[]>([]);
+  public tasks$ = this.taskSubject.asObservable().pipe(distinctUntilChanged());
 
-  constructor(private taskStorage: TaskStorageService) {}
-
+ 
   tasks = signal<Task[]>([]);
   optionSelect = signal<TaskOption>('all');
 
-  // Metodo que permite filtrar el estado de los tasks 
-  filtrarTasks = computed(() =>{
-    switch(this.optionSelect()){
-      case 'all':
-        return this.tasks();
+  filteredTasks = computed(() => {
+    const currentTasks = this.tasks();
+    switch (this.optionSelect()) {
       case 'active':
-        return this.tasks().filter((task) => !task.completed);
+        return currentTasks.filter(task => !task.completed);
       case 'completed':
-        return this.tasks().filter((task) => task.completed);
+        return currentTasks.filter(task => task.completed);
+      default:
+        return currentTasks;
     }
-  })
+  });
 
   // Permite de tener una idea de cuanto tasks has terminado
-  taskSleft = computed(
-    () => this.tasks().filter((task) => !task.completed).length
-  )
+  tasksLeft = computed(() => this.tasks().filter(task => !task.completed).length);
+
+  constructor(private taskStorage: TaskStorageService) {
+    this.loadTasks();
+  }
 
     // Load todos los tasks from local storage
     private loadTasks(): Task[] {
@@ -49,7 +49,7 @@ export class TaskServiceService {
     }
 
   // Guardar tasks to localStorage
-  private guardarTasks(tasks: Task[]): void{
+  private saveTasks(tasks: Task[]): void{
     try {
       this.taskStorage.setItem<Task[]>(this.taskStorageKey, tasks)
     } catch (error) {
@@ -58,76 +58,58 @@ export class TaskServiceService {
   }
 
   // Obtener todas las tareas //
-  getTasks(): Observable<Task[]>{
-    const tasks = this.loadTasks();  
-    console.log('Tasks cargadas de localStorage:', tasks);
-    
-    this.taskSubject.next(tasks);
-    this.tasks.set(tasks);
-
+  getTasks(): Observable<Task[]> {
     return this.tasks$;
   }
 
-  // metodo creacion de tarea
-  addTask(task: Task): Observable<boolean>{
-    if (!task || !task.title.trim()){
-      return of(false)
+  addTask(task: Task): Observable<boolean> {
+    if (!task || !task.title.trim()) {
+      return new Observable(observer => observer.next(false));
     }
-    const tasksRecientes = this.taskSubject.getValue();
-    const newTasks = [...tasksRecientes, task];
-    this.taskSubject.next(newTasks);
-
-    this.tasks.set(newTasks);
-    this.guardarTasks(newTasks)
-    return of(true);
+    const updatedTasks = [...this.taskSubject.getValue(), task];
+    this.updateTasks(updatedTasks);
+    return new Observable(observer => observer.next(true));
   }
 
-  // update task
-  updateTask(taskupdate: Task): Observable<boolean>{
-    if (!taskupdate || !taskupdate.id){
-      return of(false)
+  updateTask(taskToUpdate: Task): Observable<boolean> {
+    if (!taskToUpdate || !taskToUpdate.id) {
+      return new Observable(observer => observer.next(false));
     }
-
-    const taskRecientes = this.taskSubject.getValue();
-    const updatedTaks = taskRecientes.map(task => task.id ===
-      taskupdate.id ? taskupdate : task
+    const updatedTasks = this.taskSubject.getValue().map(task => 
+      task.id === taskToUpdate.id ? taskToUpdate : task
     );
-
-    this.taskSubject.next(updatedTaks);
-    this.tasks.set(updatedTaks);
-    this.guardarTasks(updatedTaks);
-
-    return of(true);
+    this.updateTasks(updatedTasks);
+    return new Observable(observer => observer.next(true));
   }
 
-  //Borrar task
-   deleteTask(id: number): Observable<boolean> {
+  deleteTask(id: number): Observable<boolean> {
     if (id == null) {
-      return of(false);
+      return new Observable(observer => observer.next(false));
     }
-
-    const TasksRecientes = this.taskSubject.getValue();
-    const updatedTasks = TasksRecientes.filter(task => task.id !== id);
-
-    this.taskSubject.next(updatedTasks)
-    this.tasks.set(updatedTasks)
-    this.guardarTasks
-
-    return of(true);
+    const updatedTasks = this.taskSubject.getValue().filter(task => task.id !== id);
+    this.updateTasks(updatedTasks);
+    return new Observable(observer => observer.next(true));
   }
 
-  // METODO DE SELECCION DE OPCION
-  selecTaskOption(taskOption: TaskOption){
-    if(this.optionSelect() === taskOption) return;
-    this.optionSelect.set(taskOption)
+  selectTaskOption(taskOption: TaskOption): void {
+    if (this.optionSelect() !== taskOption) {
+      this.optionSelect.set(taskOption);
+    }
   }
 
-  clearCompletedTask(){
-    return from(this.tasks().filter((task) => task.completed)).pipe(
-      mergeMap((task) => this.deleteTask(task.id!)),
-      tap(() => 
-      this.tasks.update((tasks) => tasks.filter((task)=>!task.completed)))
-    )
+  clearCompletedTasks(): Observable<boolean> {
+    const tasksToDelete = this.tasks().filter(task => task.completed);
+    const updatedTasks = this.tasks().filter(task => !task.completed);
+    this.updateTasks(updatedTasks);
+    return new Observable(observer => {
+      tasksToDelete.forEach(task => this.deleteTask(task.id!).subscribe());
+      observer.next(true);
+    });
   }
 
+  private updateTasks(tasks: Task[]): void {
+    this.taskSubject.next(tasks);
+    this.tasks.set(tasks);
+    this.saveTasks(tasks);
+  }
 }

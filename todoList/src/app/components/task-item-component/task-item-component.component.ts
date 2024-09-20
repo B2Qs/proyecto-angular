@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskServiceService } from '../../services/task-service.service';
+import { TaskService } from '../../services/task-service.service';
 import { Task } from '../../interfaces/task';
-import { take } from 'rxjs';
+import { takeUntil, Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'app-task-item-component',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     FormsModule, 
     ReactiveFormsModule, 
     MatFormFieldModule, 
@@ -123,14 +123,16 @@ import { MatInputModule } from '@angular/material/input';
   `,
   styleUrl: './task-item-component.component.scss'
 })
-export class TaskItemComponentComponent {
-
+export class TaskItemComponentComponent implements OnInit, OnDestroy {
   @Input({ required: true }) task!: Task;
-  taskService = inject(TaskServiceService);
+  taskService = inject(TaskService);
   isEditing = false;
   editTaskForm!: FormGroup;
+  
+  // Sujeto para manejar las desuscripciones
+  private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder) {
     this.editTaskForm = this.fb.group({
       title: new FormControl(this.task?.title || '', [Validators.required, Validators.minLength(2)]),
       completed: new FormControl(this.task?.completed || false),
@@ -146,7 +148,8 @@ export class TaskItemComponentComponent {
     });
   }
 
-  togglEdit(){
+  // Manejar la edición de la tarea
+  toggleEdit(): void {
     this.isEditing = !this.isEditing;
   }
 
@@ -159,7 +162,6 @@ export class TaskItemComponentComponent {
     });
   }
 
-  // Submit del formulario de edicion
   onSubmit(): void {
     if (this.editTaskForm.invalid) {
       return;
@@ -170,32 +172,39 @@ export class TaskItemComponentComponent {
       ...this.editTaskForm.value
     };
 
-    // Enviar al servicio
-    this.taskService.updateTask(updatedTask).subscribe(success => {
-      if (success) {
-        this.isEditing = false;
-      }
-    });
+    this.taskService.updateTask(updatedTask)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(success => {
+        if (success) {
+          this.isEditing = false;
+        }
+      });
   }
 
-  // Annuler le mode édition
   cancelEdit(): void {
     this.isEditing = false;
   }
 
-  // METODO DE ACTUALIZAR TAREA
-  updateTask(){
-    this.taskService.
-    updateTask({
+  // Método para actualizar el estado de la tarea
+  updateTask(): void {
+    this.taskService.updateTask({
       ...this.task,
-      completed: !this.task.completed})
-    .pipe(take(1))
+      completed: !this.task.completed
+    })
+    .pipe(takeUntil(this.destroy$)) 
     .subscribe();
   }
 
-  // METODO DE BORRAR TAREA
-  deleteTask(){
-    this.taskService.deleteTask(this.task.id).pipe(take(1)).subscribe();
+  // Método para borrar la tarea
+  deleteTask(): void {
+    this.taskService.deleteTask(this.task.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
+  // Método para limpiar suscripciones y evitar fugas de memoria
+  ngOnDestroy(): void {
+    this.destroy$.next(); 
+    this.destroy$.complete(); 
+  }
 }

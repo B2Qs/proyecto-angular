@@ -12,5 +12,6 @@ export const routes: Routes = [
     { path: 'taskItem', component: TaskItemComponentComponent },
     { path: 'listTask', component: TaskListComponentComponent},
     { path: 'allTask', component: AllTaskComponent},
+    { path: '**', redirectTo: '', pathMatch: 'full' } 
 
 ];
