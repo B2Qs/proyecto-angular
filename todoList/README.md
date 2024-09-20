@@ -1,27 +1,56 @@
-# TodoList
+Gestión de Tareas con Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
+Este proyecto es una aplicación de gestión de tareas (Todo-list) construida con Angular, Angular Material, SCSS y RxJS. La aplicación permite a los usuarios agregar, editar, eliminar y marcar tareas como completadas. El estado de las tareas se almacena en localStorage.
 
-## Development server
+Estructura del Proyecto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+    src/app/interfaces: Definiciones de las interfaces utilizadas (como Task).
+    src/app/services: Contiene los servicios, incluido TaskService para gestionar las operaciones CRUD de las tareas.
+    src/app/components: Contiene los componentes como TaskItemComponent para representar y manipular tareas.
+    assets: Imágenes y recursos estáticos.
 
-## Code scaffolding
+Funcionalidades Principales
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    Agregar tareas: Utiliza un formulario para añadir tareas nuevas a la lista.
+    Editar tareas: Permite la edición de tareas existentes.
+    Eliminar tareas: Los usuarios pueden eliminar tareas de la lista.
+    Marcar como completada: Cambia el estado de una tarea y se refleja visualmente.
+    Persistencia: Usa localStorage para guardar el estado de las tareas localmente.
+    RxJS: Se utiliza para manejar las suscripciones y la gestión de estado en el servicio.
 
-## Build
+Instalación
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+    Clona el repositorio:
 
-## Running unit tests
+    bash
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+git clone https://github.com/usuario/gestion-tareas-angular.git
+cd gestion-tareas-angular
 
-## Running end-to-end tests
+Instala las dependencias:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+bash
 
-## Further help
+    npm install
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Ejecución
+
+Para ejecutar la aplicación en modo de desarrollo:
+
+bash
+
+ng serve
+
+La aplicación estará disponible en http://localhost:4200.
+Pruebas Unitarias
+
+Para ejecutar las pruebas unitarias:
+
+bash
+
+ng test
+
+Las pruebas se ejecutan con Karma y Jasmine.
+Contribuir
+
+Se aceptan pull requests para mejorar la funcionalidad, corregir errores o añadir nuevas características.

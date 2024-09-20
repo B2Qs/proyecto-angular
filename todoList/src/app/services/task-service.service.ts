@@ -64,11 +64,11 @@ export class TaskService{
 
   addTask(task: Task): Observable<boolean> {
     if (!task || !task.title.trim()) {
-      return new Observable(observer => observer.next(false));
+      return of(false)
     }
     const updatedTasks = [...this.taskSubject.getValue(), task];
     this.updateTasks(updatedTasks);
-    return new Observable(observer => observer.next(true));
+    return of(true)
   }
 
   updateTask(taskToUpdate: Task): Observable<boolean> {

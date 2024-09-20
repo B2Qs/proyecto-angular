@@ -201,8 +201,7 @@ export class TaskItemComponentComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe();
   }
-
-  // Método para limpiar suscripciones y evitar fugas de memoria
+  
   ngOnDestroy(): void {
     this.destroy$.next(); 
     this.destroy$.complete(); 
