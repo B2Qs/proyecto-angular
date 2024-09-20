@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { Task } from '../interfaces/task';
@@ -73,22 +73,22 @@ export class TaskService{
 
   updateTask(taskToUpdate: Task): Observable<boolean> {
     if (!taskToUpdate || !taskToUpdate.id) {
-      return new Observable(observer => observer.next(false));
+      return of(false)
     }
     const updatedTasks = this.taskSubject.getValue().map(task => 
       task.id === taskToUpdate.id ? taskToUpdate : task
     );
     this.updateTasks(updatedTasks);
-    return new Observable(observer => observer.next(true));
+    return of(true)
   }
 
   deleteTask(id: number): Observable<boolean> {
     if (id == null) {
-      return new Observable(observer => observer.next(false));
+      return of(false);
     }
     const updatedTasks = this.taskSubject.getValue().filter(task => task.id !== id);
     this.updateTasks(updatedTasks);
-    return new Observable(observer => observer.next(true));
+    return of(true);
   }
 
   selectTaskOption(taskOption: TaskOption): void {
