@@ -1,56 +1,27 @@
-TodoList con Angular
+# TodoList con Angular
 
-Aplicación de gestión de tareas (Todo-list) construida con Angular, Angular Material, SCSS y RxJS. La aplicación permite a los usuarios agregar, editar, eliminar y marcar tareas como completadas. El estado de las tareas se almacena en localStorage.
+Aplicación de gestión de tareas (Todo-list) desarrollada con **Angular**, **Angular Material**, **SCSS** y **RxJS**. Permite a los usuarios agregar, editar, eliminar y marcar tareas como completadas. El estado de las tareas se almacena en `localStorage` para persistencia local.
 
-Estructura del Proyecto
+## Estructura del Proyecto
 
-    src/app/interfaces: Definiciones de las interfaces utilizadas (como Task).
-    src/app/services: Contiene los servicios, incluido TaskService para gestionar las operaciones CRUD de las tareas.
-    src/app/components: Contiene los componentes como TaskItemComponent para representar y manipular tareas.
-    assets: Imágenes y recursos estáticos.
+- **src/app/interfaces**: Definiciones de interfaces, como `Task`.
+- **src/app/services**: Servicios, incluyendo `TaskService` para operaciones CRUD.
+- **src/app/components**: Componentes como `TaskItemComponent` para gestionar tareas.
+- **assets**: Recursos estáticos como imágenes.
 
-Funcionalidades Principales
+## Funcionalidades Principales
 
-    Agregar tareas: Utiliza un formulario para añadir tareas nuevas a la lista.
-    Editar tareas: Permite la edición de tareas existentes.
-    Eliminar tareas: Los usuarios pueden eliminar tareas de la lista.
-    Marcar como completada: Cambia el estado de una tarea y se refleja visualmente.
-    Persistencia: Usa localStorage para guardar el estado de las tareas localmente.
-    RxJS: Se utiliza para manejar las suscripciones y la gestión de estado en el servicio.
+- **Agregar tareas**: Formulario para añadir nuevas tareas.
+- **Editar tareas**: Modificación de tareas existentes.
+- **Eliminar tareas**: Eliminación de tareas de la lista.
+- **Marcar como completada**: Cambio de estado de una tarea con retroalimentación visual.
+- **Persistencia**: Uso de `localStorage` para guardar el estado de las tareas.
+- **RxJS**: Gestión de suscripciones y estado en el servicio.
 
-Instalación
+## Instalación
 
-    Clona el repositorio:
+1. Clona el repositorio:
 
-    bash
-
-(https://github.com/B2Qs/proyecto-angular.git)
-cd proyecto-angular/todoList
-
-Instala las dependencias:
-
-bash
-
-    npm install
-
-Ejecución
-
-Para ejecutar la aplicación en modo de desarrollo:
-
-bash
-
-ng serve
-
-La aplicación estará disponible en http://localhost:4200.
-Pruebas Unitarias
-
-Para ejecutar las pruebas unitarias:
-
-bash
-
-ng test
-
-Las pruebas se ejecutan con Karma y Jasmine.
-Contribuir
-
-Se aceptan pull requests para mejorar la funcionalidad, corregir errores o añadir nuevas características.
+   ```bash
+   git clone https://github.com/B2Qs/proyecto-angular.git
+   cd proyecto-angular/todoList
